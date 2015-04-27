@@ -1,18 +1,17 @@
 
 
 
-var fonts = ['Open+Sans', 'Slabo+27px', 'Oswald', 'Lora', 'Raleway', 'Indie+Flower', 'Lobster', 'Play', 'Inconsolata', 'Pacifico', 'Dancing+Script', 'Architects+Daughter', 'Lobster+Two', 'Amatic+SC', 'Courgette', 'Playball', 'Comfortaa', 'Playfair+Display+SC', 'Pinyon+Script', 'Cinzel', 'Luckiest+Guy', 'Special+Elite', 'Alegreya+Sans', 'Great+Vibes', 'Tangerine'];
+var fonts = ['Open+Sans', 'Oswald', 'Lora', 'Raleway', 'Indie+Flower', 'Lobster', 'Play', 'Inconsolata', 'Pacifico', 'Dancing+Script', 'Architects+Daughter', 'Lobster+Two', 'Amatic+SC', 'Courgette', 'Playball', 'Comfortaa', 'Playfair+Display+SC', 'Pinyon+Script', 'Cinzel', 'Luckiest+Guy', 'Special+Elite', 'Alegreya+Sans', 'Great+Vibes', 'Tangerine'];
 
-var complete = (function() {
-  var tmp = [];
-  for(var i = 0; i < fonts.length; ++i) {
-    tmp[tmp.length] = fonts[i]+'::latin';
-  }
-  return tmp;
-})();
+
 
 var selection = function(func) {
-  var select = $jConstruct('select');
+  var select = $jConstruct('select').event('change', function() {
+    console.log(this.value);
+    if(undefined !== func) {
+      func(this.value);
+    }
+  });
   for(var i = 0; i < fonts.length; ++i) {
     var tmp = fonts[i].replace('+', ' ');
     select.addChild($jConstruct('option', {
@@ -20,19 +19,22 @@ var selection = function(func) {
       value: tmp,
     }).css({
       'font-family': tmp,
-    }).event('click', function() {
-      //console.log(this.value);
-      if(undefined !== func) {
-        func(this.value);
-      }
     }));
   }
   return select;
 };
 
+var complete = function() {
+  var tmp = [];
+  for(var i = 0; i < fonts.length; ++i) {
+    tmp[tmp.length] = fonts[i]+'::latin';
+  }
+  return tmp;
+};
+
 WebFontConfig = {
   google: { 
-    families: complete,
+    families: complete(),
   },
   active: function() {
     $jConstruct('div').addChild($jConstruct('div', {
