@@ -13,8 +13,13 @@ var picker = new fontPicker({
   },
 });
 
-var fonts = ['Open Sans', 'Oswald', 'Lora', 'Raleway', 'Indie Flower', 'Lobster', 'Play', 'Inconsolata', 'Pacifico', 'Dancing Script', 'Architects Daughter', 'Lobster Two', 'Amatic SC', 'Courgette', 'Playball', 'Comfortaa', 'Playfair Display+SC', 'Pinyon Script', 'Cinzel', 'Luckiest Guy', 'Special Elite', 'Alegreya Sans', 'Great Vibes', 'Tangerine'];
+//var fonts = ['Open Sans', 'Oswald', 'Lora', 'Raleway', 'Indie Flower', 'Lobster', 'Play', 'Inconsolata', 'Pacifico', 'Dancing Script', 'Architects Daughter', 'Lobster Two', 'Amatic SC', 'Courgette', 'Playball', 'Comfortaa', 'Playfair Display+SC', 'Pinyon Script', 'Cinzel', 'Luckiest Guy', 'Special Elite', 'Alegreya Sans', 'Great Vibes', 'Tangerine'];
 
-picker.load('fonts', fonts).done(function() {
-  picker.load('selection').appendTo('body');
+picker.load('selection').done(function(input) {
+  console.log(input);
+  input.appendTo('body');
 });
+
+/*picker.load('fonts', fonts).done(function() {
+  picker.load('selection').appendTo('body');
+});*/

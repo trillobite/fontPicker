@@ -44,11 +44,11 @@ var fontPicker = function(input) {
   };
 
   var load = {
-    fonts: function(fonts) {
+    fonts: function(f) {
       var dfd = new $.Deferred();
       WebFontConfig = { //creates a global variable.
         google: { 
-          families: convertFonts(fonts),
+          families: convertFonts(f),
         },
         active: function() {
           if(input.onActive) {
@@ -61,7 +61,7 @@ var fontPicker = function(input) {
       getGoogleAPI();
       return dfd.promise();
     },
-    selection: function() {
+    selection: function(f) {
       var loadIt = function() {
         var select = $jConstruct('select').event('change', function() {
           console.log(this.value);
@@ -87,10 +87,12 @@ var fontPicker = function(input) {
       });
       if(fontPickerDB.selection.active == false) {
         if(fontPickerDB.fonts.active == false) {
-          loadFonts().done(function() {
+          var dfd = new $.Deferred();
+          load.fonts(f).done(function() {
             console.log('loaded fonts');
-            loadIt();
+            dfd.resolve(loadIt());
           });
+          return dfd.promise();
         } else {
           return loadIt();
         }
